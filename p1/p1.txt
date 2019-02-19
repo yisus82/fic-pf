@@ -1,0 +1,108 @@
+Antes de empezar hay que cargar los ficheros siguientes:
+
+#load "tipos.cmo";;
+open Tipos;;
+#load "lexer.cmo";;
+#load "parser.cmo";;
+#load "lector.cmo";;
+#load "pretty.cmo";;
+
+
+Para representar los terminos sin usar Lector.term, habria que poner:
+
+let i = Abs("x",Var "x");;
+let i' = Abs("y",Var "y");;
+let ky = Abs("x",Var "y");;
+let t = Abs("x",Abs("y",Var "x"));;
+let f = Abs("x",Abs("y",Var "y"));;
+let e1 = Abs("x",App(Var "x",Var "z"));;
+let e2 = App(Abs("x",App(Var "a",Var "x")),App(Abs("y",App(Var "b",Var 
+"y")),Var "c"));;
+let e3 = App(Abs("x",Var "x"),App(Abs("y",Var "y"),Var "x"));;
+let a = App(Abs("x",Var "x"),Var "x");;
+let e4 = App(a,a);;
+let e5 = App(a,App(Var "y",Var "z"));;
+let e6 = App(Abs("x",Var "a"),a);;
+
+
+Si queremos usar Lector.term para leer y Pretty.term para presentarlos:
+
+let i = Lector.term "/x.x";;
+val i : Tipos.term = Abs ("x", Var "x")
+
+Pretty.term i;;
+- : string = "(/x.x)"
+
+let i' = Lector.term "/y.y";;
+val i' : Tipos.term = Abs ("y", Var "y")
+
+Pretty.term i';;
+- : string = "(/y.y)"
+
+let ky = Lector.term "/x.y";;
+val ky : Tipos.term = Abs ("x", Var "y")
+
+Pretty.term ky;;
+- : string = "(/x.y)"
+
+let t = Lector.term "/x./y.x";;
+val t : Tipos.term = Abs ("x", Abs ("y", Var "x"))
+
+Pretty.term t;;
+- : string = "(/x.(/y.x))"
+
+let f = Lector.term "/x./y.y";;
+val f : Tipos.term = Abs ("x", Abs ("y", Var "y"))
+
+Pretty.term f;;
+- : string = "(/x.(/y.y))"
+
+let e1 = Lector.term "/x.x z";;
+val e1 : Tipos.term = Abs ("x", App (Var "x", Var "z"))
+
+Pretty.term e1;;
+- : string = "(/x.(x z))"
+
+let e2 = Lector.term "(/x.a x) ((/y.b y) c)";;
+val e2 : Tipos.term =
+App
+ (Abs ("x", App (Var "a", Var "x")),
+  App (Abs ("y", App (Var "b", Var "y")), Var "c"))
+
+Pretty.term e2;;
+- : string = "((/x.(a x)) ((/y.(b y)) c))"
+
+let e3 = Lector.term "/x.x (/y.y x)";;
+val e3 : Tipos.term =
+Abs ("x", App (Var "x", Abs ("y", App (Var "y", Var "x"))))
+
+Pretty.term e3;;
+- : string = "(/x.(x (/y.(y x))))"
+
+let a = Lector.term "/x.x x";;
+val a : Tipos.term = Abs ("x", App (Var "x", Var "x"))
+
+Pretty.term a;;
+- : string = "(/x.(x x))"
+
+let e4 = Lector.term ((Pretty.term a) ^ " " ^ (Pretty.term a));;
+val e4 : Tipos.term =
+  App (Abs ("x", App (Var "x", Var "x")), Abs ("x", App (Var "x", Var
+"x")))
+
+Pretty.term e4;;
+- : string = "((/x.(x x)) (/x.(x x)))"
+
+let e5 = Lector.term ((Pretty.term a) ^ " (y z)");;
+val e5 : Tipos.term =
+  App (Abs ("x", App (Var "x", Var "x")), App (Var "y", Var "z"))
+
+Pretty.term e5;;
+- : string = "((/x.(x x)) (y z))"
+
+let e6 = Lector.term ("/x.a " ^ (Pretty.term a));;
+val e6 : Tipos.term =
+  Abs ("x", App (Var "a", Abs ("x", App (Var "x", Var "x"))))
+
+Pretty.term e6;;
+- : string = "(/x.(a (/x.(x x))))"

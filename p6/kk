@@ -1,0 +1,3 @@
+PUNTOFIJO ::= fun f.((fun x. f (x x)) (fun x. f (x x))) ; 
+FACT ::= PUNTOFIJO (fun g. fun n. if (n =e 0) then 1 else (n*(g (n-1)))) ;
+PROBA ::= FACT 0 ;

@@ -1,0 +1,24 @@
+conjunto.cmo: conjunto.cmi 
+conjunto.cmx: conjunto.cmi 
+fresca.cmo: fresca.cmi 
+fresca.cmx: fresca.cmi 
+pretty.cmo: tipos.cmo pretty.cmi 
+pretty.cmx: tipos.cmx pretty.cmi 
+tipado.cmo: lambda.cmi pretty.cmi tipos.cmo 
+tipado.cmx: lambda.cmx pretty.cmx tipos.cmx 
+lambda.cmo: conjunto.cmi fresca.cmi pretty.cmi tipado.cmo tipos.cmo \
+    lambda.cmi 
+lambda.cmx: conjunto.cmx fresca.cmx pretty.cmx tipado.cmx tipos.cmx \
+    lambda.cmi 
+lexer.cmo: parser.cmi tipos.cmo 
+lexer.cmx: parser.cmx tipos.cmx 
+parser.cmo: fresca.cmi tipos.cmo parser.cmi 
+parser.cmx: fresca.cmx tipos.cmx parser.cmi 
+lector.cmo: lexer.cmo parser.cmi lector.cmi 
+lector.cmx: lexer.cmx parser.cmx lector.cmi 
+main.cmo: lambda.cmi lector.cmi pretty.cmi 
+main.cmx: lambda.cmx lector.cmx pretty.cmx 
+lambda.cmi: tipos.cmo 
+lector.cmi: tipos.cmo 
+parser.cmi: tipos.cmo 
+pretty.cmi: tipos.cmo 

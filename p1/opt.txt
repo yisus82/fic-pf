@@ -1,0 +1,12 @@
+let e = Abs("x",App(Var "x",Abs("y",App(Var "y",Var "x"))));;
+
+let e2 = App(Abs("x",App(Var "a",Var "x")),App(Abs("y",App(Var "b",Var
+"y")),Var "c"));;
+
+let rec term = function
+    Var a -> a
+  | Abs (name,l) -> "/" ^ name ^ "." ^ term l
+  | App (t1, t2) -> match t2 with 
+                             Abs(name,l) -> term t1 ^ " " ^ "(" ^ term t2 ^ ")"
+                           | _           -> term t1 ^ " " ^ term t2;;
+

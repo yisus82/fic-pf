@@ -1,0 +1,15 @@
+
+TRUE ::= fun x. fun y . x;
+FALSE ::= fun x. fun y . y;
+IF ::= fun p. fun x. fun y. p x y;
+
+NOT ::= fun p. IF p FALSE TRUE;
+AND ::= fun p. fun q. IF p q FALSE;
+OR  ::= fun p. fun q. IF p TRUE q;
+
+PAR ::= fun x. fun y. fun f. f x y;
+PRIMERO ::= fun p. p TRUE;
+SEGUNDO ::= fun p. p FALSO;
+-- Hola
+SUMA ::= fun m. fun n. fun f. fun x. m f (n f x);
+

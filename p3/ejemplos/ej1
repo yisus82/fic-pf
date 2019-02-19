@@ -1,0 +1,8 @@
+
+let x := 5 *7 -2;;
+let w := / n:Int.n * 2;;
+let a := - 4;;
+let z := w x + a;;
+let b := [ 1,2, z];;
+let c := hd (tl (tl b));;
+

@@ -1,0 +1,121 @@
+En el fichero tipado.ml se definio una funcion sup_tipo para suponer el tipo de los
+terminos de la forma Var x, tal y como se hacia en los apuntes.
+
+Despues, en la funcion tipar contexto, se definieron los tipos de cada termino. Los
+booleanos tienen tipo Bool, los enteros tipo Int, las listas de enteros tipo IntList,
+las cadenas de caracteres tipo String, etc. De esta forma, se definieron los tipos tanto
+para los enteros, booleanos y condicionales (parte obligatoria), como para las listas de
+enteros, cadenas de caracteres, los pares y el "let in" (partes opcionales).
+Esto es importante porque la funcion eval_seguro del fichero lambda.ml usa la funcion
+tipo_de, que a su vez usa tipar, para hacer una evaluacion segura, comprobando primero
+si es del tipo esperado.
+
+En el fichero lambda.ml se ampliaron las funciones para calcular las variables libres y
+ligadas para que puedan trabajar con los nuevos terminos. Ademas, tambien se amplio tanto
+la funcion subst como la eval para dichos terminos.
+
+Por otra parte, tambien se definieron dos funciones para "sacar" el argumento que se
+le pasa a los constructores de los enteros y de las cadenas de caracteres. Estas funciones
+(int_of_term y cadena_of_term) ayudan a la hora de hacer la evaluacion de los operadores
+binarios y unarios (tanto de enteros como de booleanos).
+
+Para probar que todo funciona bien, a parte de usar los ejemplos proporcionados, se usaron
+los escritos en el fichero ejemplos.txt.
+
+Los resultados obtenidos al probar con dichos ejemplos son:
+
+let cierto := true;;
+valor = true
+tipo = Bool
+
+let falso := false;;
+valor = false
+tipo = Bool
+
+let condicional := if cierto then true else false;;
+valor = true
+tipo = Bool
+
+let cinco := 5;;
+valor = 5
+tipo = Int
+
+let menos_dos := (-2+1)*2/1;;
+valor = (-2)
+tipo = Int
+
+let cierto2 := if (2>3) then (3<2) else (2=2);;
+valor = true
+tipo = Bool
+
+let cadena := "cadena";;
+valor = "cadena"
+tipo = String
+
+let cadena2 := "cadena" ^ " " ^ "nueva";;
+valor = "cadena nueva"
+tipo = String
+
+let longitud := lengthc cadena2;;
+valor = 12
+tipo = Int
+
+let vacia := [];;
+valor = []
+tipo = IntList
+
+let lista := [1];;
+valor = (1::[])
+tipo = IntList
+
+let lista2 := [2,3,4];;
+valor = (2::(3::(4::[])))
+tipo = IntList
+
+let cabeza := hd lista;;
+valor = 1
+tipo = Int
+
+let cabeza2 := hd lista2;;
+valor = 2
+tipo = Int
+
+let cola := tl lista;;
+valor = []
+tipo = IntList
+
+let cola2 := tl lista2;;
+valor = (3::(4::[]))
+tipo = IntList
+
+let nulo := null lista;;
+
+
+let par := (1,cadena);;
+valor = (1,"cadena")
+tipo = (Int,String)
+
+let primero := fst par;;
+valor = 1
+tipo = Int
+
+let segundo := snd par;;
+valor = "cadena"
+tipo = String
+
+let par2 := (par,falso);;
+valor = ((1,"cadena"),false)
+tipo = ((Int,String),Bool)
+
+let primero2 := fst par2;;
+valor = (1,"cadena")
+tipo = (Int,String)
+
+let ocho := let x = 3 in x + 5;;
+valor = 8
+tipo = Int
+
+let lista3 := let b=false in if b then vacia else lista;;
+valor = (1::[])
+tipo = IntList
+

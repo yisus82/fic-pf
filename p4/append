@@ -1,0 +1,6 @@
+
+let app := /g : (IntList -> IntList -> IntList). /l: IntList. /m :  IntList. if (null l) then m else ((hd l) :: (g (tl l)) m);;
+let append := Y app;;
+let main := append [1,7,8,9,10] [2,3,4];;
+
+

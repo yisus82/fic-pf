@@ -1,0 +1,3 @@
+let a := y;;
+let b := a a;;
+let c := x;;

@@ -1,0 +1,17 @@
+En el fichero definiciones se encuentran las definiciones de
+los lambda-terminos, tanto los obligatorios como los opcionales.
+Ademas, tambien se definieron otros lambda-terminos para 
+facilitar las otras definiciones, asi como para facilitar las
+pruebas. Por ejemplo, se definieron cero y uno en la notacion
+de los naturales de Church para facilitar las pruebas que 
+involucran dichos numeros. Ademas, tambien se definio suc
+(sucesor) para facilitar la escritura de los naturales de
+Church.
+Para crear la funcion sub (resta), se necesitaron dos funciones
+auxiliares (pred y prefn) para eliminar las "f".
+
+Para comprobar que las definiciones estan bien se probaron con
+las definiciones llamadas main.
+
+En el fichero lambda.ml se cambio la definicion de la funcion
+eval para que usara la forma normal, en lugar de usar la hnf.
